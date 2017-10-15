@@ -9,22 +9,25 @@
 }
 
 .board {
-  width: 100px;
-  height: 100px;
-  background: #0f0;
-  border : 1px solid gray ;
+    width: 100px;
+    height: 100px;
+    background: #0f0;
+    color: #0f0;
+    border: 1px solid gray;
 }
 
 .black {
-  width: 100px;
-  height: 100px;
-  background: #000;
-  border : 1px solid gray ;
+    width: 100px;
+    height: 100px;
+    background: #000;
+    color: #000;
+    border: 1px solid gray;
 }
 
 .white {
-  width: 100px;
-  height: 100px;
-  background: #fff;
-  border : 1px solid gray ;
+    width: 100px;
+    height: 100px;
+    background: #fff;
+    color: #fff;
+    border: 1px solid gray;
 }

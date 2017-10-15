@@ -16,38 +16,74 @@ class App extends Component {
     ];
     this.state = {
       board: board,
-      turn: 0
+      turn: 0,
+      user: "B" // 黒が先行
     };
   }
 
   getCurrentBoardArray(y, x) {
     const board = this.state.board;
-    // const key = y * 8 + x;
     const key = "" + y + x;
+    const event = (e) => this.clickHandler(e, key);
     if (board[y][x] === "B") {
       return (
-        <span key={key} onClick={e => this.clickHandler(e)} className="black">{key}
+        <span key={key} onClick={event} className="black">{key}
         </span>
       );
     } else if (board[y][x] === "W") {
       return (
-        <span key={key} className="white">{key}
+        <span key={key} onClick={event} className="white">{key}
         </span>
       );
     } else {
       return (
-        <span key={key} className="board">{key}
+        <span key={key} onClick={event} className="board">{key}
         </span>
       );
     }
   }
 
-  clickHandler(e) {
-    // console.log(e)
-    console.log(e.currentTarget)
-    const val = "" + e.currentTarget
+  clickHandler(e, key) {
+    const y = Number(key.charAt(0))
+    const x = Number(key.charAt(1))
+    const user = this.state.user;
 
-    console.log(val)
+    let board = this.state.board;
+
+    // placing
+    board[y][x] = user;
+
+    // update
+    this.setState({
+      board: board,
+      turn: this.state.turn++,
+      user: this.changeUser()
+    })
+
+    // debug
+    console.log(key)
+    console.log(y)
+    console.log(x)
+  }
+
+  checkPlace(y, x) {
+    const board = this.state.board;
+
+    // already placing b/w
+    if (board[y][x] !== "") {
+      return false
+    }
+
+    // ここにおけるロジック
+  }
+
+  changeUser() {
+    let user = this.state.user;
+    if (user === "B") {
+      return "W"
+    } else {
+      return "B"
+    }
   }
 
   render() {
@@ -59,6 +95,9 @@ class App extends Component {
       const key = "br" + y;
       list.push(<br key={key} />);
     }
+
+    // debug
+    console.log("called render()")
 
     return <div className="App">
           {list}
