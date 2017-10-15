@@ -1,8 +1,30 @@
 .App {
-  text-align: center;
+    text-align: left;
+    font-size: 30px;
+    font-family: monospace;
 }
 
-board {
-  border: 1px;
-  border-style: #0f0;
+.disp {
+    display: inline
+}
+
+.board {
+  width: 100px;
+  height: 100px;
+  background: #0f0;
+  border : 1px solid gray ;
+}
+
+.black {
+  width: 100px;
+  height: 100px;
+  background: #000;
+  border : 1px solid gray ;
+}
+
+.white {
+  width: 100px;
+  height: 100px;
+  background: #fff;
+  border : 1px solid gray ;
 }

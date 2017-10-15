@@ -20,60 +20,49 @@ class App extends Component {
     };
   }
 
-  render() {
-    // return (
-    //   <div className="App">
-    //     <header className="App-header">
-    //       <img src={logo} className="App-logo" alt="logo" />
-    //       <h1 className="App-title">Welcome to React</h1>
-    //     </header>
-    //     <p className="App-intro">
-    //       To get started, edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //   </div>
-    // );
-    const turn = this.state.turn;
+  getCurrentBoardArray(y, x) {
     const board = this.state.board;
-
-    let contents = new Array(8);
-    let content = "";
-
-    if (turn === 0) {
-      for (let i = 0; i < 8; i++) {
-        content = "";
-        for (let j = 0; j < 8; j++) {
-          if (board[i][j] === "") {
-            content = content + "空";
-          } else if (board[i][j] === "B") {
-            content = content + "黒";
-          } else {
-            content = content + "白";
-          }
-        }
-        contents[i] = content;
-      }
-
-      console.log("hello");
-      console.log(content);
-
+    // const key = y * 8 + x;
+    const key = "" + y + x;
+    if (board[y][x] === "B") {
       return (
-        <div className="App">
-          <div>{contents[0]}</div>
-          <div>{contents[1]}</div>
-          <div>{contents[2]}</div>
-          <div>{contents[3]}</div>
-          <div>{contents[4]}</div>
-          <div>{contents[5]}</div>
-          <div>{contents[6]}</div>
-          <div>{contents[7]}</div>
-        </div>
+        <span key={key} onClick={e => this.clickHandler(e)} className="black">{key}
+        </span>
+      );
+    } else if (board[y][x] === "W") {
+      return (
+        <span key={key} className="white">{key}
+        </span>
       );
     } else {
+      return (
+        <span key={key} className="board">{key}
+        </span>
+      );
     }
   }
 
-  getOneLine() {
-    return ["", "", "", "", "", "", "", ""];
+  clickHandler(e) {
+    // console.log(e)
+    console.log(e.currentTarget)
+    const val = "" + e.currentTarget
+
+    console.log(val)
+  }
+
+  render() {
+    let list = [];
+    for (var y = 0; y < 8; y++) {
+      for (var x = 0; x < 8; x++) {
+        list.push(this.getCurrentBoardArray(y, x));
+      }
+      const key = "br" + y;
+      list.push(<br key={key} />);
+    }
+
+    return <div className="App">
+          {list}
+      </div>;
   }
 }
 
