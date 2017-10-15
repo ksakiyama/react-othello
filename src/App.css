@@ -31,3 +31,11 @@
     color: #fff;
     border: 1px solid gray;
 }
+
+.placable {
+  width: 100px;
+  height: 100px;
+  background: #900;
+  color: #9ff;
+  border: 1px solid gray;
+}

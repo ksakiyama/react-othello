@@ -1,54 +1,65 @@
 import React, { Component } from "react";
 import "./App.css";
 
+const E = 9;
+const B = 0;
+const W = 1;
+
 class App extends Component {
   constructor(props) {
     super(props);
     let board = [
-      ["", "", "", "", "", "", "", ""],
-      ["", "", "", "", "", "", "", ""],
-      ["", "", "", "", "", "", "", ""],
-      ["", "", "", "W", "B", "", "", ""],
-      ["", "", "", "B", "W", "", "", ""],
-      ["", "", "", "", "", "", "", ""],
-      ["", "", "", "", "", "", "", ""],
-      ["", "", "", "", "", "", "", ""]
+      [E, E, E, E, E, E, E, E],
+      [E, E, E, E, E, E, E, E],
+      [E, E, E, E, E, E, E, E],
+      [E, E, E, W, B, E, E, E],
+      [E, E, E, B, W, E, E, E],
+      [E, E, E, E, E, E, E, E],
+      [E, E, E, E, E, E, E, E],
+      [E, E, E, E, E, E, E, E]
     ];
     this.state = {
       board: board,
       turn: 0,
-      user: "B" // 黒が先行
+      user: B // first player
     };
   }
 
   getCurrentBoardArray(y, x) {
     const board = this.state.board;
     const key = "" + y + x;
-    const event = (e) => this.clickHandler(e, key);
-    if (board[y][x] === "B") {
+    const event = e => this.clickHandler(e, key);
+    if (board[y][x] === B) {
       return (
-        <span key={key} onClick={event} className="black">{key}
+        <span key={key} onClick={event} className="black">
+          {key}
         </span>
       );
-    } else if (board[y][x] === "W") {
+    } else if (board[y][x] === W) {
       return (
-        <span key={key} onClick={event} className="white">{key}
+        <span key={key} onClick={event} className="white">
+          {key}
         </span>
       );
     } else {
       return (
-        <span key={key} onClick={event} className="board">{key}
+        <span key={key} onClick={event} className="board">
+          {key}
         </span>
       );
     }
   }
 
   clickHandler(e, key) {
-    const y = Number(key.charAt(0))
-    const x = Number(key.charAt(1))
+    const y = Number(key.charAt(0));
+    const x = Number(key.charAt(1));
     const user = this.state.user;
 
     let board = this.state.board;
+
+    if (!this.checkPlace(y, x)) {
+      // TODO
+    }
 
     // placing
     board[y][x] = user;
@@ -58,32 +69,37 @@ class App extends Component {
       board: board,
       turn: this.state.turn++,
       user: this.changeUser()
-    })
+    });
 
     // debug
-    console.log(key)
-    console.log(y)
-    console.log(x)
+    console.log(key);
+    console.log(y);
+    console.log(x);
+  }
+
+  getPlacableCell() {
+    const board = this.state.board;
+    const user = this.state.user;
+  }
+
+  checkPlacable(y, x) {
+    const board = this.state.board;
+    const user = this.state.user;
   }
 
   checkPlace(y, x) {
     const board = this.state.board;
 
     // already placing b/w
-    if (board[y][x] !== "") {
-      return false
+    if (board[y][x] !== E) {
+      return false;
     }
 
     // ここにおけるロジック
   }
 
   changeUser() {
-    let user = this.state.user;
-    if (user === "B") {
-      return "W"
-    } else {
-      return "B"
-    }
+    return 1 - this.state.user;
   }
 
   render() {
@@ -97,11 +113,9 @@ class App extends Component {
     }
 
     // debug
-    console.log("called render()")
+    console.log("called render()");
 
-    return <div className="App">
-          {list}
-      </div>;
+    return <div className="App">{list}</div>;
   }
 }
 
