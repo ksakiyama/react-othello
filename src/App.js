@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import "./App.css";
 
-const E = 9;
 const B = 0;
 const W = 1;
+const E = 2;
+const P = 3;
+
+const dict = ["black", "white", "empty", "placable"];
 
 class App extends Component {
   constructor(props) {
     super(props);
-    let board = [
+    const board = [
       [E, E, E, E, E, E, E, E],
       [E, E, E, E, E, E, E, E],
       [E, E, E, E, E, E, E, E],
@@ -29,25 +32,12 @@ class App extends Component {
     const board = this.state.board;
     const key = "" + y + x;
     const event = e => this.clickHandler(e, key);
-    if (board[y][x] === B) {
-      return (
-        <span key={key} onClick={event} className="black">
-          {key}
-        </span>
-      );
-    } else if (board[y][x] === W) {
-      return (
-        <span key={key} onClick={event} className="white">
-          {key}
-        </span>
-      );
-    } else {
-      return (
-        <span key={key} onClick={event} className="board">
-          {key}
-        </span>
-      );
-    }
+
+    return (
+      <span key={key} onClick={event} className={dict[board[y][x]]}>
+        {key}
+      </span>
+    );
   }
 
   clickHandler(e, key) {
@@ -57,9 +47,10 @@ class App extends Component {
 
     let board = this.state.board;
 
-    if (!this.checkPlace(y, x)) {
-      // TODO
-    }
+    // if (!this.checkPlace(y, x)) {
+    //   // TODO
+
+    // }
 
     // placing
     board[y][x] = user;
@@ -68,24 +59,75 @@ class App extends Component {
     this.setState({
       board: board,
       turn: this.state.turn++,
-      user: this.changeUser()
+      user: this.getNextUser()
     });
-
-    // debug
-    console.log(key);
-    console.log(y);
-    console.log(x);
   }
 
-  getPlacableCell() {
-    const board = this.state.board;
-    const user = this.state.user;
+  reverse(y, x) {
+    var board = this.state.board;
+    for (var dy = -1; dy <= 1; dy++) {
+      for (var dx = -1; dx <= 1; dx++) {
+        if (dy === 0 && dx === 0) {
+          continue;
+        }
+
+        var ry = y + dy;
+        var rx = x + dx;
+        if (!board[ry][rx] === this.getNextUser()) {
+          continue;
+        }
+
+        ry++;
+        rx++;
+        while(this.checkBorder(ry, rx)) {
+          // 相手のセルの場合
+          if (board[ry][rx] === this.getNextUser()) {
+            ry++
+            rx++
+            continue
+          } else if(board[ry][rx] === this.state.user) {
+            // 自分と同じ場合は
+          }
+        }
+      }
+    }
   }
 
-  checkPlacable(y, x) {
-    const board = this.state.board;
-    const user = this.state.user;
+  checkBorder(y, x) {
+    if (y < 0 || y >= 8 || x < 0 || x >= 8) {
+      return false;
+    }
+    return true;
   }
+
+  // getPlacableCell() {
+  //   const board = this.state.board;
+  //   const user = this.state.user;
+  //   let list = [];
+
+  //   for (var y = 0; y < 8; y++) {
+  //     for (var x = 0; x < 8; x++) {
+
+  //       for (var dy = -1; dy <= 1; dy++) {
+  //         for (var dx = -1; dx <= 1; dx++) {
+  //           if (dx === 0 && dy ===0) {
+  //             continue
+  //           }
+
+  //           var ty = y + dy;
+  //           var tx = x + dx;
+  //           while(ty < 0 || ty >= 8 || tx < 0 || tx >= 8) {
+  //             if (board[ty][tx] == this.getNextUser())
+  //             ty += dy;
+  //             tx += dx;
+  //             break
+  //           }
+  //         }
+  //       }
+
+  //     }
+  //   }
+  // }
 
   checkPlace(y, x) {
     const board = this.state.board;
@@ -98,7 +140,7 @@ class App extends Component {
     // ここにおけるロジック
   }
 
-  changeUser() {
+  getNextUser() {
     return 1 - this.state.user;
   }
 
