@@ -24,7 +24,7 @@ class App extends Component {
     ];
 
     board = this.searchReversable(board, user);
-    console.log(board)
+    console.log(board);
 
     this.state = {
       board: board,
@@ -46,29 +46,58 @@ class App extends Component {
   }
 
   clickHandler(e, key) {
-    console.log("clicked");
     const y = Number(key.charAt(0));
     const x = Number(key.charAt(1));
 
-    var curBoard = this.state.board;
-    console.log(curBoard);
+    // const curBoard = [].concat(this.state.board);
+    const curBoard = this.state.board;
+    var user = this.state.user;
+    var turn = this.state.turn;
 
-    const user = this.state.user;
+    // reverse
     var nextBoard = this.reverse(curBoard, user, y, x);
+    console.log(curBoard);
+    console.log(nextBoard);
 
-    // console.log(nextBoard)
-    if (curBoard.toString() !== nextBoard.toString()) {
-      this.searchReversable(nextBoard, user);
-      this.setState({
-        board: nextBoard,
-        user: 1 - user,
-        turn: this.state.turn++
-      });
-      console.log("here");
-    }
+    // if changed
+    // if (curBoard.toString() !== nextBoard.toString()) {
+    //   console.log("changed")
+    //   user = 1 - user;
+    //   turn = turn + 1;
+    //   nextBoard = this.searchReversable(nextBoard, user);
+    // }
 
-    console.log("clicked end");
+    // なぜか盤面を比較しても更新されてないっぽい
+    // JavaScriptの配列と関数の引数のコピー的な問題？
+    // →[].concat()使っても解決されなかった
+
+    // for (var dy = 0; dy < 8; dy++) {
+    //   for (var dx = 0; dx < 8; dx++) {
+    //     if (nextBoard[dy][dx] !== curBoard[dy][dx]) {
+    //       console.log("changed")
+    //       user = 1 - user;
+    //       turn = turn + 1;
+    //       nextBoard = this.searchReversable(nextBoard, user);
+    //     }
+    //   }
+    // }
+
+    // これを正しく実行したいが、上手くいかないなぁ
+    //
+    user = 1 - user;
+    turn = turn + 1;
+    nextBoard = this.searchReversable(nextBoard, user);
+
+    this.setState({
+      board: nextBoard,
+      user: user,
+      turn: turn
+    });
   }
+
+  // componentWillUpdate() {
+  //   console.log("componentWillUpdate called");
+  // }
 
   searchReversable(board, user) {
     for (var y = 0; y < 8; y++) {
@@ -112,10 +141,6 @@ class App extends Component {
       }
     }
 
-    this.setState({
-      board: board
-    })
-    console.log(board)
     return board;
   }
 
@@ -158,12 +183,6 @@ class App extends Component {
           }
         }
       }
-    }
-
-    if (flag) {
-      this.setState({
-        board: board
-      })
     }
     return board;
   }
