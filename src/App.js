@@ -11,7 +11,8 @@ const dict = ["black", "white", "empty", "placable"];
 class App extends Component {
   constructor(props) {
     super(props);
-    const board = [
+    const user = B;
+    var board = [
       [E, E, E, E, E, E, E, E],
       [E, E, E, E, E, E, E, E],
       [E, E, E, E, E, E, E, E],
@@ -21,13 +22,15 @@ class App extends Component {
       [E, E, E, E, E, E, E, E],
       [E, E, E, E, E, E, E, E]
     ];
+
+    board = this.searchReversable(board, user);
+    console.log(board)
+
     this.state = {
       board: board,
       turn: 0,
-      user: B // first player
+      user: user // first player
     };
-
-    this.searchReversable(this.state.user);
   }
 
   getCurrentBoardArray(y, x) {
@@ -46,20 +49,28 @@ class App extends Component {
     console.log("clicked");
     const y = Number(key.charAt(0));
     const x = Number(key.charAt(1));
-    const board = this.state.board;
 
-    // if (board[y][x] === P) {
-    if (this.reverse(y, x)) {
-      console.log("debug");
-      this.searchReversable(); // なぜかreverseで更新されたuserが変更されていない
+    var curBoard = this.state.board;
+    console.log(curBoard);
+
+    const user = this.state.user;
+    var nextBoard = this.reverse(curBoard, user, y, x);
+
+    // console.log(nextBoard)
+    if (curBoard.toString() !== nextBoard.toString()) {
+      this.searchReversable(nextBoard, user);
+      this.setState({
+        board: nextBoard,
+        user: 1 - user,
+        turn: this.state.turn++
+      });
+      console.log("here");
     }
-    // }
 
     console.log("clicked end");
   }
 
-  searchReversable(user) {
-    var board = this.state.board;
+  searchReversable(board, user) {
     for (var y = 0; y < 8; y++) {
       for (var x = 0; x < 8; x++) {
         if (board[y][x] === B || board[y][x] === W) {
@@ -103,15 +114,13 @@ class App extends Component {
 
     this.setState({
       board: board
-    });
+    })
+    console.log(board)
+    return board;
   }
 
-  reverse(y, x) {
+  reverse(board, user, y, x) {
     var flag = false;
-    var board = this.state.board;
-    const user = this.state.user;
-
-    // cheking around cells
     for (var dy = -1; dy <= 1; dy++) {
       for (var dx = -1; dx <= 1; dx++) {
         if (dx === 0 && dy === 0) {
@@ -120,7 +129,7 @@ class App extends Component {
 
         var sx = x + dx;
         var sy = y + dy;
-        if (!this.onBoard(sy, sx) || !(board[sy][sx] === this.getNextUser())) {
+        if (!this.onBoard(sy, sx) || !(board[sy][sx] === 1 - user)) {
           continue;
         }
 
@@ -133,7 +142,7 @@ class App extends Component {
             board[sy][sx] === E
           ) {
             break;
-          } else if (board[sy][sx] === this.getNextUser()) {
+          } else if (board[sy][sx] === 1 - user) {
             continue;
           } else {
             while (true) {
@@ -152,22 +161,11 @@ class App extends Component {
     }
 
     if (flag) {
-      // refresh
-      // for (var iy = 0; iy < 8; iy++) {
-      //   for (var ix = 0; ix < 8; ix++) {
-      //     if (board[iy][ix] === P) {
-      //       board[iy][ix] = E;
-      //     }
-      //   }
-      // }
       this.setState({
-        board: board,
-        turn: this.state.turn++,
-        user: 1 - this.state.user
-      });
+        board: board
+      })
     }
-
-    return flag;
+    return board;
   }
 
   onBoard(y, x) {
