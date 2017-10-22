@@ -43,91 +43,70 @@ class App extends Component {
   clickHandler(e, key) {
     const y = Number(key.charAt(0));
     const x = Number(key.charAt(1));
-    const user = this.state.user;
-
-    let board = this.state.board;
-
-    // if (!this.checkPlace(y, x)) {
-    //   // TODO
-
-    // }
-
-    // placing
-    board[y][x] = user;
-
-    // update
-    this.setState({
-      board: board,
-      turn: this.state.turn++,
-      user: this.getNextUser()
-    });
+    const board = this.state.board;
+    if (board[y][x] === E) {
+      this.reverse(y, x)      
+    }
   }
 
   reverse(y, x) {
+    var flag = false;
     var board = this.state.board;
+    const user = this.state.user;
+
+    // cheking around cells
     for (var dy = -1; dy <= 1; dy++) {
       for (var dx = -1; dx <= 1; dx++) {
-        if (dy === 0 && dx === 0) {
+        if (dx === 0 && dy === 0) {
           continue;
         }
 
-        var ry = y + dy;
-        var rx = x + dx;
-        if (!board[ry][rx] === this.getNextUser()) {
+        var sx = x + dx;
+        var sy = y + dy;
+        if (!this.onBoard(sy, sx) || !(board[sy][sx] === this.getNextUser())) {
           continue;
         }
 
-        ry++;
-        rx++;
-        while(this.checkBorder(ry, rx)) {
-          // 相手のセルの場合
-          if (board[ry][rx] === this.getNextUser()) {
-            ry++
-            rx++
-            continue
-          } else if(board[ry][rx] === this.state.user) {
-            // 自分と同じ場合は
+        while(true) {
+          sx = sx + dx;
+          sy = sy + dy;
+          if (!this.onBoard(sy, sx) || board[sy][sx] === E) {
+            break;
+          } else if (board[sy][sx] === this.getNextUser()) {
+            continue;
+          } else {
+            while (true) {
+              sx = sx - dx;
+              sy = sy - dy;
+              board[sy][sx] = user;
+              if (sx === x && sy === y) {
+                flag = true;
+                break;
+              }
+            }
+            break;
           }
         }
       }
     }
+
+    if (flag) {
+      this.setState({
+        board: board,
+        turn: this.state.turn++,
+        user: this.getNextUser()
+      });
+    }
+
+    return flag;
   }
 
-  checkBorder(y, x) {
+  onBoard(y, x) {
     if (y < 0 || y >= 8 || x < 0 || x >= 8) {
       return false;
     }
     return true;
   }
-
-  // getPlacableCell() {
-  //   const board = this.state.board;
-  //   const user = this.state.user;
-  //   let list = [];
-
-  //   for (var y = 0; y < 8; y++) {
-  //     for (var x = 0; x < 8; x++) {
-
-  //       for (var dy = -1; dy <= 1; dy++) {
-  //         for (var dx = -1; dx <= 1; dx++) {
-  //           if (dx === 0 && dy ===0) {
-  //             continue
-  //           }
-
-  //           var ty = y + dy;
-  //           var tx = x + dx;
-  //           while(ty < 0 || ty >= 8 || tx < 0 || tx >= 8) {
-  //             if (board[ty][tx] == this.getNextUser())
-  //             ty += dy;
-  //             tx += dx;
-  //             break
-  //           }
-  //         }
-  //       }
-
-  //     }
-  //   }
-  // }
 
   checkPlace(y, x) {
     const board = this.state.board;
