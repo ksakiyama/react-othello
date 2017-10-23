@@ -28,11 +28,11 @@ class App extends Component {
 
     this.state = {
       board: board,
-      // turn: 0,
-      // user: user // first player
+      turn: 0,
+      user: user // first player
     };
 
-    this.user = B;
+    // this.user = B;
   }
 
   getCurrentBoardArray(y, x) {
@@ -51,38 +51,18 @@ class App extends Component {
     const y = Number(key.charAt(0));
     const x = Number(key.charAt(1));
 
-    // const curBoard = [].concat(this.state.board);
     const curBoard = this.state.board;
     var user = this.state.user;
     var turn = this.state.turn;
+
+    if (curBoard[y][x] !== P) {
+      return;
+    }
 
     // reverse
     var nextBoard = this.reverse(curBoard, user, y, x);
     console.log(curBoard);
     console.log(nextBoard);
-
-    // if changed
-    // if (curBoard.toString() !== nextBoard.toString()) {
-    //   console.log("changed")
-    //   user = 1 - user;
-    //   turn = turn + 1;
-    //   nextBoard = this.searchReversable(nextBoard, user);
-    // }
-
-    // なぜか盤面を比較しても更新されてないっぽい
-    // JavaScriptの配列と関数の引数のコピー的な問題？
-    // →[].concat()使っても解決されなかった
-
-    // for (var dy = 0; dy < 8; dy++) {
-    //   for (var dx = 0; dx < 8; dx++) {
-    //     if (nextBoard[dy][dx] !== curBoard[dy][dx]) {
-    //       console.log("changed")
-    //       user = 1 - user;
-    //       turn = turn + 1;
-    //       nextBoard = this.searchReversable(nextBoard, user);
-    //     }
-    //   }
-    // }
 
     // これを正しく実行したいが、上手くいかないなぁ
     // react tutorialのゲームが参考になるかも
