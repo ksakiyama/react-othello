@@ -31,8 +31,6 @@ class App extends Component {
       turn: 0,
       user: user // first player
     };
-
-    // this.user = B;
   }
 
   getCurrentBoardArray(y, x) {
@@ -50,36 +48,27 @@ class App extends Component {
   clickHandler(e, key) {
     const y = Number(key.charAt(0));
     const x = Number(key.charAt(1));
+    var board = this.state.board;
 
-    const curBoard = this.state.board;
-    var user = this.state.user;
-    var turn = this.state.turn;
-
-    if (curBoard[y][x] !== P) {
+    if (board[y][x] !== P) {
       return;
     }
 
-    // reverse
-    var nextBoard = this.reverse(curBoard, user, y, x);
-    console.log(curBoard);
-    console.log(nextBoard);
+    var user = this.state.user;
 
-    // これを正しく実行したいが、上手くいかないなぁ
-    // react tutorialのゲームが参考になるかも
+    // reverse
+    var board = this.reverse(board, user, y, x);
+
+    // update state
     user = 1 - user;
-    turn = turn + 1;
-    nextBoard = this.searchReversable(nextBoard, user);
+    board = this.searchReversable(board, user);
 
     this.setState({
-      board: nextBoard,
+      board: board,
       user: user,
-      turn: turn
+      turn: this.state.turn + 1
     });
   }
-
-  // componentWillUpdate() {
-  //   console.log("componentWillUpdate called");
-  // }
 
   searchReversable(board, user) {
     for (var y = 0; y < 8; y++) {
@@ -127,7 +116,6 @@ class App extends Component {
   }
 
   reverse(board, user, y, x) {
-    var flag = false;
     for (var dy = -1; dy <= 1; dy++) {
       for (var dx = -1; dx <= 1; dx++) {
         if (dx === 0 && dy === 0) {
@@ -157,7 +145,6 @@ class App extends Component {
               sy = sy - dy;
               board[sy][sx] = user;
               if (sx === x && sy === y) {
-                flag = true;
                 break;
               }
             }
@@ -176,32 +163,7 @@ class App extends Component {
     return true;
   }
 
-  checkPlace(y, x) {
-    const board = this.state.board;
-
-    // already placing b/w
-    if (board[y][x] !== E) {
-      return false;
-    }
-
-    // ここにおけるロジック
-  }
-
-  getNextUser() {
-    return 1 - this.state.user;
-  }
-
   render() {
-    // debug
-    const user = this.state.user;
-    const turn = this.state.turn;
-    if (user === B) {
-      console.log("user:black");
-    } else {
-      console.log("user:white");
-    }
-    console.log("turn:" + turn);
-
     let list = [];
     for (var y = 0; y < 8; y++) {
       for (var x = 0; x < 8; x++) {
