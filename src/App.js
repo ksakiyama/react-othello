@@ -28,9 +28,11 @@ class App extends Component {
 
     this.state = {
       board: board,
-      turn: 0,
-      user: user // first player
+      // turn: 0,
+      // user: user // first player
     };
+
+    this.user = B;
   }
 
   getCurrentBoardArray(y, x) {
@@ -83,7 +85,7 @@ class App extends Component {
     // }
 
     // これを正しく実行したいが、上手くいかないなぁ
-    //
+    // react tutorialのゲームが参考になるかも
     user = 1 - user;
     turn = turn + 1;
     nextBoard = this.searchReversable(nextBoard, user);
