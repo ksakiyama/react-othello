@@ -12,7 +12,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     const user = B;
-    var board = [
+    let board = [
       [E, E, E, E, E, E, E, E],
       [E, E, E, E, E, E, E, E],
       [E, E, E, E, E, E, E, E],
@@ -33,31 +33,19 @@ class App extends Component {
     };
   }
 
-  getCurrentBoardArray(y, x) {
-    const board = this.state.board;
-    const key = "" + y + x;
-    const event = e => this.clickHandler(e, key);
-
-    return (
-      <span key={key} onClick={event} className={dict[board[y][x]]}>
-        {key}
-      </span>
-    );
-  }
-
   clickHandler(e, key) {
     const y = Number(key.charAt(0));
     const x = Number(key.charAt(1));
-    var board = this.state.board;
+    let board = this.state.board;
 
     if (board[y][x] !== P) {
       return;
     }
 
-    var user = this.state.user;
+    let user = this.state.user;
 
     // reverse
-    var board = this.reverse(board, user, y, x);
+    board = this.reverse(board, user, y, x);
 
     // update state
     user = 1 - user;
@@ -71,22 +59,22 @@ class App extends Component {
   }
 
   searchReversable(board, user) {
-    for (var y = 0; y < 8; y++) {
-      for (var x = 0; x < 8; x++) {
+    for (let y = 0; y < 8; y++) {
+      for (let x = 0; x < 8; x++) {
         if (board[y][x] === B || board[y][x] === W) {
           continue;
         }
 
         board[y][x] = E;
 
-        for (var dy = -1; dy <= 1; dy++) {
-          for (var dx = -1; dx <= 1; dx++) {
+        for (let dy = -1; dy <= 1; dy++) {
+          for (let dx = -1; dx <= 1; dx++) {
             if (dx === 0 && dy === 0) {
               continue;
             }
 
-            var sx = x + dx;
-            var sy = y + dy;
+            let sx = x + dx;
+            let sy = y + dy;
             if (!this.onBoard(sy, sx) || !(board[sy][sx] === 1 - user)) {
               continue;
             }
@@ -116,14 +104,14 @@ class App extends Component {
   }
 
   reverse(board, user, y, x) {
-    for (var dy = -1; dy <= 1; dy++) {
-      for (var dx = -1; dx <= 1; dx++) {
+    for (let dy = -1; dy <= 1; dy++) {
+      for (let dx = -1; dx <= 1; dx++) {
         if (dx === 0 && dy === 0) {
           continue;
         }
 
-        var sx = x + dx;
-        var sy = y + dy;
+        let sx = x + dx;
+        let sy = y + dy;
         if (!this.onBoard(sy, sx) || !(board[sy][sx] === 1 - user)) {
           continue;
         }
@@ -165,12 +153,19 @@ class App extends Component {
 
   render() {
     let list = [];
-    for (var y = 0; y < 8; y++) {
-      for (var x = 0; x < 8; x++) {
-        list.push(this.getCurrentBoardArray(y, x));
+    const board = this.state.board;
+    for (let y = 0; y < 8; y++) {
+      for (let x = 0; x < 8; x++) {
+        const key = "" + y + x;
+        const event = e => this.clickHandler(e, key);
+        list.push(
+          <span key={key} onClick={event} className={dict[board[y][x]]}>
+            {key}
+          </span>
+        );
       }
-      const key = "br" + y;
-      list.push(<br key={key} />);
+      const br_key = "br" + y;
+      list.push(<br key={br_key} />);
     }
 
     return <div className="App">{list}</div>;
