@@ -23,7 +23,7 @@ class App extends Component {
       [E, E, E, E, E, E, E, E]
     ];
 
-    board = this.searchReversable(board, user);
+    board = this.searchPlacable(board, user);
     console.log(board);
 
     this.state = {
@@ -49,7 +49,7 @@ class App extends Component {
 
     // update state
     user = 1 - user;
-    board = this.searchReversable(board, user);
+    board = this.searchPlacable(board, user);
 
     this.setState({
       board: board,
@@ -58,7 +58,7 @@ class App extends Component {
     });
   }
 
-  searchReversable(board, user) {
+  searchPlacable(board, user) {
     for (let y = 0; y < 8; y++) {
       for (let x = 0; x < 8; x++) {
         if (board[y][x] === B || board[y][x] === W) {
