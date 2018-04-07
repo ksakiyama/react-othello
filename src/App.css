@@ -1,41 +1,52 @@
 .App {
-    text-align: left;
-    font-size: 30px;
-    font-family: monospace;
+  text-align: left;
+  font-family: monospace;
 }
 
-.disp {
-    display: inline
+.game-board {
+  margin: 0 auto;
 }
 
-.empty {
-    width: 100px;
-    height: 100px;
-    background: #0f0;
-    color: #0f0;
-    border: 1px solid gray;
+.game-board td {
+  width: 4rem;
+  height: 4rem;
+  background: rgb(29, 148, 55);
+  border: 1px solid #ccc;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+  text-align: center;
 }
 
-.black {
-    width: 100px;
-    height: 100px;
-    background: #000;
-    color: #000;
-    border: 1px solid gray;
+/* TODO delete */
+.game-board td .empty {
+  /* background: rgb(29, 148, 55);
+  color: rgb(29, 148, 55); */
+  /* border: 1px solid gray; */
 }
 
-.white {
-    width: 100px;
-    height: 100px;
-    background: #fff;
-    color: #fff;
-    border: 1px solid gray;
+.game-board td .black {
+  width: 3rem;
+  height: 3rem;
+  display: inline-block;
+  background: #000;
+  border-radius: 50%;
 }
 
-.placable {
-  width: 100px;
-  height: 100px;
+.game-board td .white {
+  width: 3rem;
+  height: 3rem;
+  display: inline-block;
+  background: #fff;
+  color: #fff;
+  border-radius: 50%;
+}
+
+.game-board td .placable {
+  width: 3rem;
+  height: 3rem;
+  display: inline-block;
   background: #900;
   color: #900;
-  border: 1px solid gray;
+  border-radius: 30%;
 }

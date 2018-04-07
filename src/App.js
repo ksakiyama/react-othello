@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import "./App.css";
+import React, { Component } from 'react';
+import './App.css';
 
 const B = 0;
 const W = 1;
 const E = 2;
 const P = 3;
 
-const dict = ["black", "white", "empty", "placable"];
+const dict = ['black', 'white', 'empty', 'placable'];
 
 class App extends Component {
   constructor(props) {
@@ -151,24 +151,43 @@ class App extends Component {
     return true;
   }
 
-  render() {
+  renderBoard() {
+    return <table className="game-board">
+      {this.renderLine(0)}
+      {this.renderLine(1)}
+      {this.renderLine(2)}
+      {this.renderLine(3)}
+      {this.renderLine(4)}
+      {this.renderLine(5)}
+      {this.renderLine(6)}
+      {this.renderLine(7)}
+    </table>;
+  }
+
+  renderLine(y) {
     let list = [];
     const board = this.state.board;
-    for (let y = 0; y < 8; y++) {
-      for (let x = 0; x < 8; x++) {
-        const key = "" + y + x;
-        const event = e => this.clickHandler(e, key);
-        list.push(
+    for (let x = 0; x < 8; x++) {
+      const key = '' + y + x;
+      const event = e => this.clickHandler(e, key);
+      list.push(
+        <td>
           <span key={key} onClick={event} className={dict[board[y][x]]}>
-            {key}
           </span>
-        );
-      }
-      const br_key = "br" + y;
-      list.push(<br key={br_key} />);
+        </td>
+      );
     }
+    const br_key = 'br' + y;
+    list.push(<br key={br_key} />);
+    return <tr>{list}</tr>;
+  }
 
-    return <div className="App">{list}</div>;
+  render() {
+    return (
+      <div className="App">
+        {this.renderBoard()}
+      </div>
+    );
   }
 }
 
