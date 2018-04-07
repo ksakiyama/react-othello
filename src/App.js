@@ -40,6 +40,10 @@ class App extends Component {
   }
 
   clickHandler(e, key) {
+    if (this.state.gameover) {
+      return;
+    }
+
     const y = Number(key.charAt(0));
     const x = Number(key.charAt(1));
     let board = this.state.board;
@@ -79,22 +83,19 @@ class App extends Component {
       } else {
         message = 'Draw';
       }
-      return;
-    }
-
-    if (skip) {
-      user = user - 1;
-      board = this.searchPlacable(board, user); // check again
-    }
-
-    if (user === B) {
-      message = 'Black turn';
     } else {
-      message = 'White turn';
-    }
-
-    if (skip) {
-      message = 'Skipped. ' + message + ' again';
+      if (skip) {
+        user = 1 - user;
+        board = this.searchPlacable(board, user); // check again
+      }
+      if (user === B) {
+        message = 'Black turn';
+      } else {
+        message = 'White turn';
+      }
+      if (skip) {
+        message = 'Skipped. ' + message + ' again';
+      }
     }
 
     this.setState({
@@ -103,7 +104,8 @@ class App extends Component {
       turn: this.state.turn + 1,
       message,
       cnt_black,
-      cnt_white
+      cnt_white,
+      gameover
     });
   }
 
@@ -268,7 +270,7 @@ class App extends Component {
             <li>White:{this.state.cnt_white}</li>
           </ul>
         </li>
-        <li>You can place stone on red square point.</li>
+        <li>You can place your stone on the red square point.</li>
       </ul>
     );
   }
