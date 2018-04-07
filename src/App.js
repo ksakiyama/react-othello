@@ -110,33 +110,36 @@ class App extends Component {
           continue;
         }
 
-        let sx = x + dx;
-        let sy = y + dy;
-        if (!this.onBoard(sy, sx) || !(board[sy][sx] === 1 - user)) {
+        let nx = x + dx;
+        let ny = y + dy;
+        if (!this.onBoard(ny, nx) || !(board[ny][nx] === 1 - user)) {
           continue;
         }
 
+        let step = 2;
+        let flipable = false;
+        let flipable_points = [[x, y], [nx, ny]];
         while (true) {
-          sx = sx + dx;
-          sy = sy + dy;
+          nx = x + dx * step;
+          ny = y + dy * step;
+
           if (
-            !this.onBoard(sy, sx) ||
-            board[sy][sx] === P ||
-            board[sy][sx] === E
+            !this.onBoard(ny, nx) ||
+            board[ny][nx] === P ||
+            board[ny][nx] === E
           ) {
             break;
-          } else if (board[sy][sx] === 1 - user) {
-            continue;
-          } else {
-            while (true) {
-              sx = sx - dx;
-              sy = sy - dy;
-              board[sy][sx] = user;
-              if (sx === x && sy === y) {
-                break;
-              }
-            }
+          } else if (board[ny][nx] === user) {
+            flipable = true;
             break;
+          }
+          flipable_points.push([nx, ny]);
+          step += 1;
+        }
+
+        if (flipable) {
+          for (const p of flipable_points) {
+            board[p[1]][p[0]] = user;
           }
         }
       }
@@ -152,16 +155,18 @@ class App extends Component {
   }
 
   renderBoard() {
-    return <table className="game-board">
-      {this.renderLine(0)}
-      {this.renderLine(1)}
-      {this.renderLine(2)}
-      {this.renderLine(3)}
-      {this.renderLine(4)}
-      {this.renderLine(5)}
-      {this.renderLine(6)}
-      {this.renderLine(7)}
-    </table>;
+    return (
+      <table className="game-board">
+        {this.renderLine(0)}
+        {this.renderLine(1)}
+        {this.renderLine(2)}
+        {this.renderLine(3)}
+        {this.renderLine(4)}
+        {this.renderLine(5)}
+        {this.renderLine(6)}
+        {this.renderLine(7)}
+      </table>
+    );
   }
 
   renderLine(y) {
@@ -171,23 +176,16 @@ class App extends Component {
       const key = '' + y + x;
       const event = e => this.clickHandler(e, key);
       list.push(
-        <td>
-          <span key={key} onClick={event} className={dict[board[y][x]]}>
-          </span>
+        <td key={key}>
+          <span key={key} onClick={event} className={dict[board[y][x]]} />
         </td>
       );
     }
-    const br_key = 'br' + y;
-    list.push(<br key={br_key} />);
-    return <tr>{list}</tr>;
+    return <tbody><tr>{list}</tr></tbody>;
   }
 
   render() {
-    return (
-      <div className="App">
-        {this.renderBoard()}
-      </div>
-    );
+    return <div className="App">{this.renderBoard()}</div>;
   }
 }
 
