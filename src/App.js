@@ -73,22 +73,22 @@ class App extends Component {
               continue;
             }
 
-            let sx = x + dx;
-            let sy = y + dy;
-            if (!this.onBoard(sy, sx) || !(board[sy][sx] === 1 - user)) {
+            let nx = x + dx;
+            let ny = y + dy;
+            if (!this.onBoard(ny, nx) || !(board[ny][nx] === 1 - user)) {
               continue;
             }
 
             while (true) {
-              sx = sx + dx;
-              sy = sy + dy;
+              nx = nx + dx;
+              ny = ny + dy;
               if (
-                !this.onBoard(sy, sx) ||
-                board[sy][sx] === E ||
-                board[sy][sx] === P
+                !this.onBoard(ny, nx) ||
+                board[ny][nx] === E ||
+                board[ny][nx] === P
               ) {
                 break;
-              } else if (board[sy][sx] === 1 - user) {
+              } else if (board[ny][nx] === 1 - user) {
                 continue;
               } else {
                 board[y][x] = P;
