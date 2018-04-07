@@ -6,6 +6,8 @@ const W = 1;
 const E = 2;
 const P = 3;
 
+const N = 8;
+
 const dict = ['black', 'white', 'empty', 'placable'];
 
 class App extends Component {
@@ -29,7 +31,11 @@ class App extends Component {
     this.state = {
       board: board,
       turn: 0,
-      user: user // first player
+      user: user,
+      message: 'Brack turn',
+      cnt_black: 2,
+      cnt_white: 2,
+      gameover: false
     };
   }
 
@@ -51,16 +57,78 @@ class App extends Component {
     user = 1 - user;
     board = this.searchPlacable(board, user);
 
+    // check status
+    let [cnt_black, cnt_white, cnt_placeble] = this.countStone(board);
+
+    let gameover = false;
+    let skip = false;
+    if (cnt_black + cnt_white === N * N) {
+      gameover = true;
+    } else if (cnt_black === 0 || cnt_white === 0) {
+      gameover = true;
+    } else if (cnt_placeble === 0) {
+      skip = true;
+    }
+
+    let message = '';
+    if (gameover) {
+      if (cnt_black > cnt_white) {
+        message = 'Black won!';
+      } else if (cnt_black < cnt_white) {
+        message = 'White won!';
+      } else {
+        message = 'Draw';
+      }
+      return;
+    }
+
+    if (skip) {
+      user = user - 1;
+      board = this.searchPlacable(board, user); // check again
+    }
+
+    if (user === B) {
+      message = 'Black turn';
+    } else {
+      message = 'White turn';
+    }
+
+    if (skip) {
+      message = 'Skipped. ' + message + ' again';
+    }
+
     this.setState({
       board: board,
       user: user,
-      turn: this.state.turn + 1
+      turn: this.state.turn + 1,
+      message,
+      cnt_black,
+      cnt_white
     });
   }
 
+  countStone(board) {
+    let b = 0;
+    let w = 0;
+    let p = 0;
+    for (let y = 0; y < N; y++) {
+      for (let x = 0; x < N; x++) {
+        if (board[y][x] === B) {
+          b++;
+        } else if (board[y][x] === W) {
+          w++;
+        } else if (board[y][x] === P) {
+          p++;
+        }
+      }
+    }
+    return [b, w, p];
+  }
+
   searchPlacable(board, user) {
-    for (let y = 0; y < 8; y++) {
-      for (let x = 0; x < 8; x++) {
+    let cnt_placeble = 0;
+    for (let y = 0; y < N; y++) {
+      for (let x = 0; x < N; x++) {
         if (board[y][x] === B || board[y][x] === W) {
           continue;
         }
@@ -92,6 +160,7 @@ class App extends Component {
                 continue;
               } else {
                 board[y][x] = P;
+                cnt_placeble += 1;
                 break;
               }
             }
@@ -148,7 +217,7 @@ class App extends Component {
   }
 
   onBoard(y, x) {
-    if (y < 0 || y >= 8 || x < 0 || x >= 8) {
+    if (y < 0 || y >= N || x < 0 || x >= N) {
       return false;
     }
     return true;
@@ -172,7 +241,7 @@ class App extends Component {
   renderLine(y) {
     let list = [];
     const board = this.state.board;
-    for (let x = 0; x < 8; x++) {
+    for (let x = 0; x < N; x++) {
       const key = '' + y + x;
       const event = e => this.clickHandler(e, key);
       list.push(
@@ -181,11 +250,37 @@ class App extends Component {
         </td>
       );
     }
-    return <tbody><tr>{list}</tr></tbody>;
+    return (
+      <tbody>
+        <tr>{list}</tr>
+      </tbody>
+    );
+  }
+
+  renderExplanation() {
+    return (
+      <ul>
+        <li>
+          GAME STATUS
+          <ul>
+            <li>{this.state.message}</li>
+            <li>Black:{this.state.cnt_black}</li>
+            <li>White:{this.state.cnt_white}</li>
+          </ul>
+        </li>
+        <li>You can place stone on red square point.</li>
+      </ul>
+    );
   }
 
   render() {
-    return <div className="App">{this.renderBoard()}</div>;
+    return (
+      <div className="App">
+        {this.renderBoard()}
+        <br />
+        {this.renderExplanation()}
+      </div>
+    );
   }
 }
 
