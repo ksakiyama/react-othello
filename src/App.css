@@ -4,7 +4,7 @@
 }
 
 .game-board {
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 .game-board td {
@@ -17,18 +17,19 @@
   text-align: center;
 }
 
-/* TODO delete */
 .game-board td .empty {
-  /* background: rgb(29, 148, 55);
-  color: rgb(29, 148, 55); */
-  /* border: 1px solid gray; */
+  width: 3rem;
+  height: 3rem;
+  display: inline-block;
+  background: rgb(29, 148, 55);
+  border-radius: 50%;
 }
 
 .game-board td .black {
   width: 3rem;
   height: 3rem;
   display: inline-block;
-  background: #000;
+  background: black;
   border-radius: 50%;
 }
 
@@ -36,8 +37,7 @@
   width: 3rem;
   height: 3rem;
   display: inline-block;
-  background: #fff;
-  color: #fff;
+  background: white;
   border-radius: 50%;
 }
 
@@ -46,6 +46,5 @@
   height: 3rem;
   display: inline-block;
   background: #900;
-  color: #900;
   border-radius: 30%;
 }
