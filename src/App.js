@@ -283,7 +283,6 @@ class App extends Component {
             <li>White:{this.state.cnt_white}</li>
           </ul>
         </li>
-        <li>You can place your stone on the red square point.</li>
       </ul>
     );
   }
