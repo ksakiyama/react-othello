@@ -128,7 +128,6 @@ class App extends Component {
   }
 
   searchPlacable(board, user) {
-    let cnt_placeble = 0;
     for (let y = 0; y < N; y++) {
       for (let x = 0; x < N; x++) {
         if (board[y][x] === B || board[y][x] === W) {
@@ -162,7 +161,6 @@ class App extends Component {
                 continue;
               } else {
                 board[y][x] = P;
-                cnt_placeble += 1;
                 break;
               }
             }
