@@ -226,6 +226,18 @@ class App extends Component {
   renderBoard() {
     return (
       <table className="game-board">
+        <tr>
+          {/* render top columns */}
+          <th />
+          <th>a</th>
+          <th>b</th>
+          <th>c</th>
+          <th>d</th>
+          <th>e</th>
+          <th>f</th>
+          <th>g</th>
+          <th>h</th>
+        </tr>
         {this.renderLine(0)}
         {this.renderLine(1)}
         {this.renderLine(2)}
@@ -241,6 +253,10 @@ class App extends Component {
   renderLine(y) {
     let list = [];
     const board = this.state.board;
+
+    // render left columns
+    list.push(<th key={y}>{y + 1}</th>);
+
     for (let x = 0; x < N; x++) {
       const key = '' + y + x;
       const event = e => this.clickHandler(e, key);

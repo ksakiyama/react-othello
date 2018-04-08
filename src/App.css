@@ -8,6 +8,11 @@
   /* margin: 0 auto; */
 }
 
+tr > th {
+  text-align: center;
+  padding: 10px;
+}
+
 .game-board td {
   width: 4rem;
   height: 4rem;
