@@ -26,7 +26,6 @@ class App extends Component {
     ];
 
     board = this.searchPlacable(board, user);
-    console.log(board);
 
     this.state = {
       board: board,
