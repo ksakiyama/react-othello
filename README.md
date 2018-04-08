@@ -2,7 +2,7 @@
 Web App of Othello Board Game using React.js.<br>
 This app is my very first React app.
 
-![エビフライトライアングル](app_image.png "サンプル")
+![AppImage](app_image.png "AppImage")
 
 ## How to play
 You can play this after executing following commands.
@@ -18,3 +18,6 @@ npm start
 ```
 brew install node
 ```
+
+## Demo
+* [Demo](https://react-othello.firebaseapp.com/)
