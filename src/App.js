@@ -279,8 +279,8 @@ class App extends Component {
           GAME STATUS
           <ul>
             <li>{this.state.message}</li>
-            <li>Black:{this.state.cnt_black}</li>
-            <li>White:{this.state.cnt_white}</li>
+            <li># of Black Stones:{this.state.cnt_black}</li>
+            <li># of White Stones:{this.state.cnt_white}</li>
           </ul>
         </li>
       </ul>
