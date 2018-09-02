@@ -274,22 +274,20 @@ class App extends Component {
 
   renderExplanation() {
     return (
-      <ul>
-        <li>
-          GAME STATUS
-          <ul>
-            <li>{this.state.message}</li>
-            <li>
-              # of Black Stones:
-              {this.state.cnt_black}
-            </li>
-            <li>
-              # of White Stones:
-              {this.state.cnt_white}
-            </li>
-          </ul>
-        </li>
-      </ul>
+      <div>
+        <h2>GAME STATUS</h2>
+        <ul>
+          <li>{this.state.message}</li>
+          <li>
+            # of Black Stones:
+            {this.state.cnt_black}
+          </li>
+          <li>
+            # of White Stones:
+            {this.state.cnt_white}
+          </li>
+        </ul>
+      </div>
     );
   }
 
