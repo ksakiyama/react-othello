@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 
 const B = 0;
 const W = 1;
@@ -8,7 +8,7 @@ const P = 3;
 
 const N = 8;
 
-const dict = ['black', 'white', 'empty', 'placable'];
+const dict = ["black", "white", "empty", "placable"];
 
 class App extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class App extends Component {
       board: board,
       turn: 0,
       user: user,
-      message: 'Brack turn',
+      message: "Brack turn",
       cnt_black: 2,
       cnt_white: 2,
       gameover: false
@@ -73,14 +73,14 @@ class App extends Component {
       skip = true;
     }
 
-    let message = '';
+    let message = "";
     if (gameover) {
       if (cnt_black > cnt_white) {
-        message = 'Black won!';
+        message = "Black won!";
       } else if (cnt_black < cnt_white) {
-        message = 'White won!';
+        message = "White won!";
       } else {
-        message = 'Draw';
+        message = "Draw";
       }
     } else {
       if (skip) {
@@ -88,12 +88,12 @@ class App extends Component {
         board = this.searchPlacable(board, user); // check again
       }
       if (user === B) {
-        message = 'Black turn';
+        message = "Black turn";
       } else {
-        message = 'White turn';
+        message = "White turn";
       }
       if (skip) {
-        message = 'Skipped. ' + message + ' again';
+        message = "Skipped. " + message + " again";
       }
     }
 
@@ -257,7 +257,7 @@ class App extends Component {
     list.push(<th key={y}>{y + 1}</th>);
 
     for (let x = 0; x < N; x++) {
-      const key = '' + y + x;
+      const key = "" + y + x;
       const event = e => this.clickHandler(e, key);
       list.push(
         <td key={key}>
@@ -279,8 +279,14 @@ class App extends Component {
           GAME STATUS
           <ul>
             <li>{this.state.message}</li>
-            <li># of Black Stones:{this.state.cnt_black}</li>
-            <li># of White Stones:{this.state.cnt_white}</li>
+            <li>
+              # of Black Stones:
+              {this.state.cnt_black}
+            </li>
+            <li>
+              # of White Stones:
+              {this.state.cnt_white}
+            </li>
           </ul>
         </li>
       </ul>
