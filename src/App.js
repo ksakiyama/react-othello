@@ -222,39 +222,9 @@ class App extends Component {
     return true;
   }
 
-  renderBoard() {
-    return (
-      <table className="game-board">
-        <tr>
-          {/* render top columns */}
-          <th />
-          <th>a</th>
-          <th>b</th>
-          <th>c</th>
-          <th>d</th>
-          <th>e</th>
-          <th>f</th>
-          <th>g</th>
-          <th>h</th>
-        </tr>
-        {this.renderLine(0)}
-        {this.renderLine(1)}
-        {this.renderLine(2)}
-        {this.renderLine(3)}
-        {this.renderLine(4)}
-        {this.renderLine(5)}
-        {this.renderLine(6)}
-        {this.renderLine(7)}
-      </table>
-    );
-  }
-
   renderLine(y) {
-    let list = [];
+    let list = [<th key={y}>{y + 1}</th>];
     const board = this.state.board;
-
-    // render left columns
-    list.push(<th key={y}>{y + 1}</th>);
 
     for (let x = 0; x < N; x++) {
       const key = "" + y + x;
@@ -265,19 +235,43 @@ class App extends Component {
         </td>
       );
     }
-    return (
-      <tbody>
-        <tr>{list}</tr>
-      </tbody>
-    );
+    return <tr>{list}</tr>;
   }
 
-  renderExplanation() {
+  render() {
     return (
-      <div>
+      <div className="App">
+        <table className="game-board">
+          <thead>
+            <tr>
+              <th />
+              <th>a</th>
+              <th>b</th>
+              <th>c</th>
+              <th>d</th>
+              <th>e</th>
+              <th>f</th>
+              <th>g</th>
+              <th>h</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.renderLine(0)}
+            {this.renderLine(1)}
+            {this.renderLine(2)}
+            {this.renderLine(3)}
+            {this.renderLine(4)}
+            {this.renderLine(5)}
+            {this.renderLine(6)}
+            {this.renderLine(7)}
+          </tbody>
+        </table>
+        <br />
         <h2>GAME STATUS</h2>
         <ul>
-          <li>{this.state.message}</li>
+          <li>
+            <b>{this.state.message}</b>
+          </li>
           <li>
             # of Black Stones:
             {this.state.cnt_black}
@@ -287,16 +281,6 @@ class App extends Component {
             {this.state.cnt_white}
           </li>
         </ul>
-      </div>
-    );
-  }
-
-  render() {
-    return (
-      <div className="App">
-        {this.renderBoard()}
-        <br />
-        {this.renderExplanation()}
       </div>
     );
   }

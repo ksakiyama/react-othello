@@ -1,11 +1,9 @@
-# react-othello
-Web App of Othello Board Game using React.js.<br>
-This app is my very first React app.
+# React Example : react-othello
+Othello game by React.js. This app is my very first React app.
 
-![AppImage](app_image.png "AppImage")
+<img src="app_image.png" width="500px" />
 
-## How to play
-You can play this after executing following commands.
+## Setup
 ```
 git clone https://github.com/ksakiyama/react-othello.git
 cd react-othello
@@ -14,10 +12,10 @@ npm start
 ```
 
 ## Dependencies
-* npm
+### npm
 ```
 brew install node
 ```
 
 ## Demo
-* [Demo](https://react-othello.firebaseapp.com/)
+[Demo Link](https://react-othello.firebaseapp.com/)
