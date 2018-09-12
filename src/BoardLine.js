@@ -1,5 +1,6 @@
 import React from "react";
 import { N, classes } from "./constants.js";
+import Cell from "./Cell.js";
 
 export default class BoardLine extends React.Component {
   handleClick = key => {
@@ -17,12 +18,13 @@ export default class BoardLine extends React.Component {
     for (let x = 0; x < N; x++) {
       const key = "" + y + x;
       list.push(
-        <td key={key}>
-          <span
-            onClick={() => this.handleClick(key)}
-            className={classes[line[x]]}
-          />
-        </td>
+        <Cell
+          key={key}
+          x={x}
+          y={y}
+          clickHandler={this.props.clickHandler}
+          type={line[x]}
+        />
       );
     }
     return <tr>{list}</tr>;
