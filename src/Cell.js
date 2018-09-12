@@ -8,7 +8,7 @@ export default class Cell extends React.Component {
 
   render() {
     return (
-      <td key={this.props.key}>
+      <td>
         <span
           onClick={() => this.handleClick(this.props.x, this.props.y)}
           className={classes[this.props.type]}
