@@ -1,9 +1,4 @@
-const B = 0;
-const W = 1;
-const E = 2;
-const P = 3;
-
-const N = 8;
+import { B, W, E, P, N } from "./constants.js";
 
 export function calculate(obj, x, y) {
   if (obj.gameover) {
