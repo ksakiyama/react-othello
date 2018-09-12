@@ -3,15 +3,7 @@ import "./App.css";
 import BoardLine from "./BoardLine.js";
 import { calculate, searchPlacable } from "./calculate.js";
 
-// TODO add constraints.js
-const B = 0;
-const W = 1;
-const E = 2;
-const P = 3;
-
-const N = 8;
-
-const dict = ["black", "white", "empty", "placable"];
+import { B, W, E } from "./constants.js";
 
 class App extends Component {
   constructor(props) {
@@ -34,7 +26,7 @@ class App extends Component {
       board: board,
       turn: 0,
       user: user,
-      message: "Brack turn",
+      message: "Black turn",
       cnt_black: 2,
       cnt_white: 2,
       gameover: false
