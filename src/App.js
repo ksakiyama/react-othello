@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import BoardLine from "./BoardLine.js";
+import GameBoard from "./GameBoard.js";
 import { calculate, searchPlacable } from "./calculate.js";
 
 import { B, W, E } from "./constants.js";
@@ -40,33 +40,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <table className="game-board">
-          <thead>
-            <tr>
-              <th />
-              <th>a</th>
-              <th>b</th>
-              <th>c</th>
-              <th>d</th>
-              <th>e</th>
-              <th>f</th>
-              <th>g</th>
-              <th>h</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.board.map((line, y) => {
-              return (
-                <BoardLine
-                  key={y}
-                  y={y}
-                  line={line}
-                  clickHandler={this.handleClick}
-                />
-              );
-            })}
-          </tbody>
-        </table>
+        <GameBoard board={this.state.board} clickHandler={this.handleClick} />
         <br />
         <h2>GAME STATUS</h2>
         <ul>
