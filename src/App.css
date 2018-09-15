@@ -60,6 +60,17 @@ body {
   border-radius: 50%;
 }
 
+.game-status {
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.game-status th,
+.game-status td {
+  border: 1px solid black;
+  padding: 10px;
+}
+
 ul {
   list-style: none;
 }

@@ -21,13 +21,13 @@ export function calculate(obj, x, y) {
   board = searchPlacable(board, user);
 
   // check status
-  let [cnt_black, cnt_white, cnt_placeble] = countStone(board);
+  let [cntBlack, cntWhite, cnt_placeble] = countStone(board);
 
   let gameover = false;
   let skip = false;
-  if (cnt_black + cnt_white === N * N) {
+  if (cntBlack + cntWhite === N * N) {
     gameover = true;
-  } else if (cnt_black === 0 || cnt_white === 0) {
+  } else if (cntBlack === 0 || cntWhite === 0) {
     gameover = true;
   } else if (cnt_placeble === 0) {
     skip = true;
@@ -35,26 +35,17 @@ export function calculate(obj, x, y) {
 
   let message = "";
   if (gameover) {
-    if (cnt_black > cnt_white) {
+    if (cntBlack > cntWhite) {
       message = "Black won!";
-    } else if (cnt_black < cnt_white) {
+    } else if (cntBlack < cntWhite) {
       message = "White won!";
     } else {
       message = "Draw";
     }
-  } else {
-    if (skip) {
-      user = 1 - user;
-      board = searchPlacable(board, user); // check again
-    }
-    if (user === B) {
-      message = "Black turn";
-    } else {
-      message = "White turn";
-    }
-    if (skip) {
-      message = "Skipped. " + message + " again";
-    }
+  } else if (skip) {
+    user = 1 - user;
+    board = searchPlacable(board, user); // check again
+    message = "Skipped. " + getUserColor(user) + " again.";
   }
 
   return {
@@ -62,8 +53,8 @@ export function calculate(obj, x, y) {
     user: user,
     turn: obj.turn + 1,
     message,
-    cnt_black,
-    cnt_white,
+    cntBlack,
+    cntWhite,
     gameover
   };
 }
@@ -140,11 +131,7 @@ function reverse(board, user, y, x) {
         nx = x + dx * step;
         ny = y + dy * step;
 
-        if (
-          !isOnBoard(ny, nx) ||
-          board[ny][nx] === P ||
-          board[ny][nx] === E
-        ) {
+        if (!isOnBoard(ny, nx) || board[ny][nx] === P || board[ny][nx] === E) {
           break;
         } else if (board[ny][nx] === user) {
           flipable = true;
@@ -180,4 +167,11 @@ function countStone(board) {
     }
   }
   return [b, w, p];
+}
+
+export function getUserColor(user) {
+  if (user == B) {
+    return "Black";
+  }
+  return "White";
 }
