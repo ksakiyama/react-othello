@@ -170,7 +170,7 @@ function countStone(board) {
 }
 
 export function getUserColor(user) {
-  if (user == B) {
+  if (user === B) {
     return "Black";
   }
   return "White";
