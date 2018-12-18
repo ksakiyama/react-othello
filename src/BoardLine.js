@@ -1,7 +1,7 @@
 import React from "react";
 import Cell from "./Cell.js";
 
-const BoardLine = (props) => {
+const BoardLine = props => {
   const y = props.y;
   return (
     <tr>
@@ -18,7 +18,7 @@ const BoardLine = (props) => {
         );
       })}
     </tr>
-  )
-}
+  );
+};
 
 export default BoardLine;

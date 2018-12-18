@@ -1,7 +1,7 @@
 import React from "react";
 import { classes } from "./constants.js";
 
-export default class Cell extends React.Component {
+export default class Cell extends React.PureComponent {
   handleClick = (x, y) => {
     this.props.clickHandler(x, y);
   };

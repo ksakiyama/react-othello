@@ -1,14 +1,14 @@
 import React from "react";
 import { getUserColor } from "./calculate.js";
 
-const GameStatus = props => {
+const GameStatus = React.memo(props => {
   return (
     <table className="game-status">
       <thead>
         <tr>
           <th>TURN</th>
-          <th># of Black</th>
-          <th># of White</th>
+          <th># of BLACK</th>
+          <th># of WHITE</th>
         </tr>
       </thead>
       <tbody>
@@ -20,6 +20,6 @@ const GameStatus = props => {
       </tbody>
     </table>
   );
-};
+});
 
 export default GameStatus;
