@@ -2,11 +2,11 @@ import React from "react";
 import Cell from "./Cell.js";
 
 const BoardLine = props => {
-  const y = props.y;
+  const { y, line } = props;
   return (
     <tr>
       <th>{y + 1}</th>
-      {props.line.map((cellType, x) => {
+      {line.map((cellType, x) => {
         return (
           <Cell
             key={"" + y + x}
